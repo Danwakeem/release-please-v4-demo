@@ -46,7 +46,7 @@ jobs:
         id: release
         with:
           skip-github-pull-request: true
-          skip-github-release: false
+          skip-github-release: true
   prod-deploy:
     environment: prod
     name: Deploy Prod
