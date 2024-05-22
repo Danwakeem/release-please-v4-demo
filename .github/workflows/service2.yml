@@ -1,0 +1,52 @@
+name: Service1 Deploy
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+  packages: read
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "service1/**"
+      - ".github/workflows/service1.yml"
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Stage to deploy to - for example, "dev" or "prod"'
+        required: true
+        default: 'dev'
+
+jobs:
+  lower-env-deploy:
+    name: Deploy Lower Environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fake deploy
+        run: echo "HI MOM"
+  release-please:
+    environment: prod
+    name: Release Please
+    needs:
+      - release-please
+    runs-on: ubuntu-latest
+    outputs:
+      release-created: ${{ steps.release.outputs.service1--release_created }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          skip-github-pull-request: true
+  prod-deploy:
+    environment: prod
+    name: Deploy Prod
+    needs:
+      - release-please
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fake deploy
+        run: echo "HI MOM"
