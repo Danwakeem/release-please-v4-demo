@@ -22,6 +22,9 @@ jobs:
   lower-env-deploy:
     name: Deploy Lower Environment
     runs-on: ubuntu-latest
+    concurrency:
+      group: svc1-lower-env-deploy
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
       - name: Fake deploy
@@ -30,7 +33,10 @@ jobs:
     environment: prod
     name: Release Please
     needs:
-      - release-please
+      - lower-env-deploy
+    concurrency:
+      group: svc1-release-please
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     outputs:
       release-created: ${{ steps.release.outputs.service2--release_created }}
@@ -45,6 +51,9 @@ jobs:
     name: Deploy Prod
     needs:
       - release-please
+    concurrency:
+      group: svc1-prod-deploy
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

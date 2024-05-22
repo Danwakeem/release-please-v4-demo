@@ -20,6 +20,9 @@ on:
 
 jobs:
   lower-env-deploy:
+    concurrency:
+      group: svc2-lower-env-deploy
+      cancel-in-progress: true
     name: Deploy Lower Environment
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +30,9 @@ jobs:
       - name: Fake deploy
         run: echo "HI MOM"
   release-please:
+    concurrency:
+      group: svc2-release-please
+      cancel-in-progress: true
     environment: prod
     name: Release Please
     needs:
@@ -41,6 +47,9 @@ jobs:
         with:
           skip-github-pull-request: true
   prod-deploy:
+    concurrency:
+      group: svc2-prod-deploy
+      cancel-in-progress: true
     environment: prod
     name: Deploy Prod
     needs:
