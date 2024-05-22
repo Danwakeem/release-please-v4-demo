@@ -52,7 +52,6 @@ jobs:
     concurrency:
       group: svc2-prod-deploy
       cancel-in-progress: true
-    environment: prod
     name: Deploy Prod
     needs:
       - release-please
