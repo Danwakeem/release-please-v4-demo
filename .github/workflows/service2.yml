@@ -1,4 +1,4 @@
-name: Service1 Deploy
+name: Service2 Deploy
 
 permissions:
   id-token: write
@@ -33,10 +33,10 @@ jobs:
     concurrency:
       group: svc2-release-please
       cancel-in-progress: true
-    environment: prod
+    environment: release
     name: Release Please
     needs:
-      - release-please
+      - lower-env-deploy
     runs-on: ubuntu-latest
     outputs:
       release-created: ${{ steps.release.outputs.service1--release_created }}
@@ -46,7 +46,9 @@ jobs:
         id: release
         with:
           skip-github-pull-request: true
+          skip-github-release: false
   prod-deploy:
+    environment: prod
     concurrency:
       group: svc2-prod-deploy
       cancel-in-progress: true

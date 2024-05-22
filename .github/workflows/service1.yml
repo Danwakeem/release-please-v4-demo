@@ -1,4 +1,4 @@
-name: Service2 Deploy
+name: Service1 Deploy
 
 permissions:
   id-token: write
@@ -30,7 +30,7 @@ jobs:
       - name: Fake deploy
         run: echo "HI MOM"
   release-please:
-    environment: prod
+    environment: release
     name: Release Please
     needs:
       - lower-env-deploy
@@ -46,6 +46,7 @@ jobs:
         id: release
         with:
           skip-github-pull-request: true
+          skip-github-release: false
   prod-deploy:
     environment: prod
     name: Deploy Prod
