@@ -4,9 +4,6 @@
   "release-type": "node",
   "separate-pull-requests": true,
   "packages": {
-    "service1": {
-      "package-name": "svc-1"
-    },
     "service2": {
       "package-name": "svc-2"
     }

@@ -9,8 +9,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "service2/**"
-      - ".github/workflows/service2.yml"
+      - "service1/**"
+      - ".github/workflows/service1.yml"
   workflow_dispatch:
     inputs:
       stage:
@@ -30,7 +30,6 @@ jobs:
       - name: Fake deploy
         run: echo "HI MOM"
   release-please:
-    environment: release
     name: Release Please
     needs:
       - lower-env-deploy
@@ -39,14 +38,13 @@ jobs:
       cancel-in-progress: true
     runs-on: ubuntu-latest
     outputs:
-      release-created: ${{ steps.release.outputs.service2--release_created }}
+      release-created: ${{ steps.release.outputs.service1--release_created }}
     steps:
       - uses: actions/checkout@v4
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          skip-github-pull-request: true
-          skip-github-release: true
+          config-file: service1/release-please-config.json
   prod-deploy:
     environment: prod
     name: Deploy Prod
