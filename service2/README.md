@@ -70,4 +70,3 @@ In response, you should see output similar to:
 ```bash
 {"message": "Message accepted!"}
 ```
-
