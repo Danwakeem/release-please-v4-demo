@@ -17,7 +17,6 @@ on:
         description: 'Stage to deploy to - for example, "dev" or "prod"'
         required: true
         default: 'dev'
-
 jobs:
   lower-env-deploy:
     concurrency:
