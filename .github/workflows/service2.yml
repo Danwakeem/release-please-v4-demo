@@ -45,13 +45,14 @@ jobs:
         with:
           config-file: service2/release-please-config.json
   prod-deploy:
-    environment: prod
+    needs:
+      - release-please
+    if: ${{ needs.release-please.outputs.release-created }}
     concurrency:
       group: svc2-prod-deploy
       cancel-in-progress: true
+    environment: prod
     name: Deploy Prod
-    needs:
-      - release-please
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
